@@ -1,0 +1,9 @@
+# Keep line endings sane across Windows/macOS/Linux.
+* text=auto eol=lf
+
+# Binary assets are committed directly (small), NOT through Git LFS —
+# Vercel's build does not fetch LFS objects, which would leave the story
+# illustrations as broken pointers on the deployed site.
+*.png binary
+*.jpg binary
+*.woff2 binary

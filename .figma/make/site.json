@@ -1,0 +1,12 @@
+{
+  "title": "BackSoon — temporary shift cover for local businesses",
+  "description": "BackSoon connects businesses with verified students who can temporarily cover work shifts when regular workers are away. MVP demo.",
+  "language": "en",
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": true,
+    "ignoreReducedMotion": false
+  }
+}
