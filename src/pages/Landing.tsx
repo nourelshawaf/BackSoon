@@ -142,11 +142,15 @@ function SectionScenario({ onNavigate }: { onNavigate: (v: View) => void }) {
             <img
               src={nadeenHero}
               alt="Nadeen, a student in Budapest, at the airport with her backpack and suitcase, ready to travel"
+              width={545}
+              height={540}
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-auto object-cover"
             />
             {/* handwritten-style note */}
             <div
-              className="absolute top-4 left-4 rounded-xl bg-white/85 backdrop-blur px-3 py-2 shadow-sm"
+              className="absolute top-4 left-4 rounded-xl bg-white/95 px-3 py-2 shadow-sm"
               style={{
                 opacity: inView ? 1 : 0,
                 transform: inView ? 'none' : 'translateY(-8px)',
@@ -161,7 +165,7 @@ function SectionScenario({ onNavigate }: { onNavigate: (v: View) => void }) {
 
             {/* trip card that "moves in" */}
             <div
-              className="absolute -bottom-0 left-1/2 -translate-x-1/2 w-[82%] rounded-t-xl bg-ink/92 backdrop-blur text-white p-3.5"
+              className="absolute -bottom-0 left-1/2 -translate-x-1/2 w-[82%] rounded-t-xl bg-ink/95 text-white p-3.5"
               style={{
                 opacity: inView ? 1 : 0,
                 transform: inView ? 'translate(-50%,0)' : 'translate(-50%,28px)',
@@ -227,9 +231,13 @@ function SectionStory() {
                 <img
                   src={b.img}
                   alt={`Nadeen — ${b.title}: ${b.caption}`}
+                  width={250}
+                  height={162}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
-                <span className="absolute top-2 left-2 font-display font-700 text-xs text-white bg-ink/70 backdrop-blur rounded-md px-1.5 py-0.5">
+                <span className="absolute top-2 left-2 font-display font-700 text-xs text-white bg-ink/80 rounded-md px-1.5 py-0.5">
                   {b.step}
                 </span>
                 {b.step === '04' && (
@@ -272,7 +280,7 @@ function SectionProblem() {
           {attempts.map((a, i) => (
             <div
               key={a.channel}
-              className="absolute w-64 rounded-xl bg-white/[0.06] border border-white/10 backdrop-blur-sm p-4"
+              className="absolute w-64 rounded-xl bg-white/[0.06] border border-white/10 p-4"
               style={{
                 left: a.x,
                 top: a.y,

@@ -107,6 +107,8 @@ export function Wordmark({
     const o = oRef.current;
     if (!wrap || !b || !o) return;
 
+    const r = (n: number) => Math.round(n * 10) / 10;
+
     const measure = () => {
       const W = wrap.getBoundingClientRect();
       const B = b.getBoundingClientRect();
@@ -114,21 +116,28 @@ export function Wordmark({
       if (!W.width || !O.height) return;
       const h = O.height;
       const bottom = O.top - W.top + h * 0.86;
-      const xs = B.left - W.left + B.width * 0.3;
-      const xe = O.left - W.left + O.width * 0.9;
-      const ys = bottom + h * 0.1;
-      const cx = (xs + xe) / 2;
-      const cy = bottom + h * 0.55;
-      const ye = bottom + h * 0.05;
-      const stroke = Math.max(1.8, h * 0.075);
+      const xs = r(B.left - W.left + B.width * 0.3);
+      const xe = r(O.left - W.left + O.width * 0.9);
+      const ys = r(bottom + h * 0.1);
+      const cx = r((xs + xe) / 2);
+      const cy = r(bottom + h * 0.55);
+      const ye = r(bottom + h * 0.05);
       const d = `M${xs} ${ys} Q${cx} ${cy} ${xe} ${ye}`;
-      setGeo({
-        w: W.width,
-        h: W.height,
-        d,
-        head: arrowhead(xe, ye, cx, cy, h * 0.17),
-        stroke,
-        len: 0,
+      const w = r(W.width);
+      const hh = r(W.height);
+      // Font load and the ResizeObserver's first callback both re-measure. Only
+      // re-render when the geometry really moved, and keep the measured length
+      // when the path is unchanged, so the draw-in animation never restarts.
+      setGeo(prev => {
+        if (prev && prev.d === d && prev.w === w && prev.h === hh) return prev;
+        return {
+          w,
+          h: hh,
+          d,
+          head: arrowhead(xe, ye, cx, cy, h * 0.17),
+          stroke: Math.max(1.8, h * 0.075),
+          len: prev && prev.d === d ? prev.len : 0,
+        };
       });
     };
 

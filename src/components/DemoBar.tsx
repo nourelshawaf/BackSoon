@@ -17,7 +17,7 @@ export default function DemoBar({ userType, onSwitchRole }: DemoBarProps) {
   const [confirmReset, setConfirmReset] = useState(false);
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 border-t border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+    <div className="fixed bottom-0 inset-x-0 z-50 border-t border-border bg-card">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center gap-x-4 gap-y-2">
         <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           Demo

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+/* Montserrat is loaded from index.html (preconnected) so it starts downloading before this CSS arrives. */
 @import 'tailwindcss';
 
 /*
@@ -142,7 +142,6 @@ body {
 .font-500 { font-weight: 500; }
 .font-600 { font-weight: 600; }
 .font-700 { font-weight: 700; }
-.font-800 { font-weight: 800; }
 
 /* Pitch-style wordmark and big figures */
 .bs-figure {

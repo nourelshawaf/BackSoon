@@ -28,22 +28,49 @@ interface DemoState {
   reviews: Review[];
 }
 
+// JSON copy rather than structuredClone — the seed is plain data, and
+// structuredClone is missing on older iOS Safari.
+const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
+
 const seed = (): DemoState => ({
-  shifts: structuredClone(SHIFTS),
-  students: structuredClone(STUDENTS),
-  applications: structuredClone(APPLICATIONS),
+  shifts: clone(SHIFTS),
+  students: clone(STUDENTS),
+  applications: clone(APPLICATIONS),
   reviews: [],
 });
+
+/** Saved state is only trusted if it has the shape every screen relies on. */
+function isValidState(v: unknown): v is DemoState {
+  const s = v as DemoState;
+  return (
+    !!s &&
+    Array.isArray(s.shifts) && s.shifts.length > 0 &&
+    s.shifts.every(sh => typeof sh?.id === 'string' && Array.isArray(sh.skillTags) && typeof sh.time === 'string') &&
+    Array.isArray(s.students) &&
+    s.students.some(st => st?.id === DEMO_STUDENT_ID) &&
+    s.students.every(st => Array.isArray(st?.skills) && typeof st.availability === 'string') &&
+    Array.isArray(s.applications) &&
+    Array.isArray(s.reviews)
+  );
+}
 
 function load(): DemoState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return seed();
-    const parsed = JSON.parse(raw) as DemoState;
-    if (!parsed?.shifts?.length || !parsed?.students?.length) return seed();
-    return parsed;
+    const parsed: unknown = JSON.parse(raw);
+    return isValidState(parsed) ? parsed : seed();
   } catch {
     return seed();
+  }
+}
+
+/** Used by the error screen to recover from a bad saved demo. */
+export function clearSavedDemo() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* storage unavailable — nothing to clear */
   }
 }
 

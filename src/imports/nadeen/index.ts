@@ -1,14 +1,14 @@
 // Nadeen — the illustrated guide through the BackSoon story.
 // Sliced from the brand storyboard sketch (src/imports/image.png).
-import hero from './hero.png';
-import goingAway from './01-going-away.png';
-import theProblem from './02-the-problem.png';
-import theSearch from './03-the-search.png';
-import backsoon from './04-backsoon.png';
-import theMatch from './05-the-match.png';
-import theCoverage from './06-the-coverage.png';
-import sheGoes from './07-she-goes.png';
-import shesBack from './08-shes-back.png';
+import hero from './hero.webp';
+import goingAway from './01-going-away.webp';
+import theProblem from './02-the-problem.webp';
+import theSearch from './03-the-search.webp';
+import backsoon from './04-backsoon.webp';
+import theMatch from './05-the-match.webp';
+import theCoverage from './06-the-coverage.webp';
+import sheGoes from './07-she-goes.webp';
+import shesBack from './08-shes-back.webp';
 
 export const nadeenHero = hero;
 
