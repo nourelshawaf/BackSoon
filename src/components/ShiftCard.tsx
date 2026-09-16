@@ -13,10 +13,10 @@ interface ShiftCardProps {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Hospitality: 'bg-blue-50 text-blue-700',
-  Retail: 'bg-purple-50 text-purple-700',
-  'Food & Beverage': 'bg-orange-50 text-orange-700',
-  Events: 'bg-pink-50 text-pink-700',
+  Hospitality: 'bg-accent-light text-accent',
+  Retail: 'bg-muted text-foreground',
+  'Food & Beverage': 'bg-warm-light text-deep',
+  Events: 'bg-secondary text-secondary-foreground',
 };
 
 export default function ShiftCard({ shift, onClick, variant = 'browse', match, applicants, statusLabel }: ShiftCardProps) {

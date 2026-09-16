@@ -57,11 +57,19 @@ export default function Logo({ size = 26, wordmark = true, className = '', anima
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <LogoMark size={size} animate={animate} />
-      {wordmark && (
-        <span className="font-display font-700 tracking-tight text-foreground leading-none">
-          Back<span className="text-accent">Soon</span>
-        </span>
-      )}
+      {wordmark && <Wordmark />}
+    </span>
+  );
+}
+
+/** "BackSoon" as set in the pitch: B and S in red, the rest in salmon. */
+export function Wordmark({ className = '' }: { className?: string }) {
+  return (
+    <span className={`font-display font-700 tracking-tight leading-none ${className}`}>
+      <span className="text-accent">B</span>
+      <span className="text-warm">ack</span>
+      <span className="text-accent">S</span>
+      <span className="text-warm">oon</span>
     </span>
   );
 }

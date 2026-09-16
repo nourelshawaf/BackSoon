@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { View } from '../types';
-import Logo, { LogoMark } from '../components/Logo';
+import Logo, { LogoMark, Wordmark } from '../components/Logo';
 import { nadeenHero, storyBeats } from '../imports/nadeen';
 
 interface LandingProps {
@@ -341,9 +341,9 @@ function SectionEvidence() {
         <div className="grid md:grid-cols-3 gap-4 mt-12">
           {facts.map((f, i) => (
             <Reveal key={f.figure} delay={i * 120}>
-              <div className="h-full flex flex-col border border-border rounded-xl p-6">
+              <div className="h-full flex flex-col bg-card border border-border rounded-xl p-6">
                 <div className="flex items-baseline gap-3">
-                  <p className="font-display font-700 text-4xl sm:text-5xl tracking-tight text-ink">{f.figure}</p>
+                  <p className="bs-figure text-4xl sm:text-5xl">{f.figure}</p>
                   {f.badge && (
                     <span className="text-sm font-semibold text-accent bg-accent-light px-2 py-0.5 rounded-full">
                       {f.badge}
@@ -384,7 +384,7 @@ function SectionTransition() {
       <Reveal className="flex flex-col items-center">
         <LogoMark size={64} animate />
         <h2 className="font-display font-700 text-4xl sm:text-5xl tracking-tight mt-6">
-          Meet Back<span className="text-accent">Soon</span>.
+          Meet <Wordmark />.
         </h2>
         <p className="text-lg text-muted-foreground mt-4 max-w-md">
           Temporary coverage for when life takes you somewhere else.

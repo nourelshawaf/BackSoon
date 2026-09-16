@@ -207,7 +207,7 @@ export function ShiftDetail({ onNavigate, activeShiftId }: StudentProps) {
           <div className="flex items-start gap-4 mb-6">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">{shift.category}</span>
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-muted text-foreground">{shift.category}</span>
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${
                   shift.status === 'open' ? 'bg-accent-light text-accent' : 'bg-muted text-muted-foreground'
                 }`}>

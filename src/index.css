@@ -1,33 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
+/*
+ * BackSoon brand — matched to the pitch deck.
+ *   Deep red  #A40000  figures, emphasis
+ *   Red       #C00000  primary actions, the B and S of the wordmark
+ *   Salmon    #FF8B8B  display accents, the rest of the wordmark
+ *   Blush     #FEF3F8  page background
+ *   Ink       #111111  text
+ * Salmon is too light for small text on white (≈2.3:1), so it is used only
+ * for large display type and decoration; buttons and links use red.
+ */
 @theme {
-  --color-background: #FFFFFF;
-  --color-foreground: #0A1A33;
+  --color-background: #FEF3F8;
+  --color-foreground: #111111;
   --color-card: #FFFFFF;
-  --color-card-foreground: #0A1A33;
-  --color-primary: #0A1A33;
+  --color-card-foreground: #111111;
+  --color-primary: #111111;
   --color-primary-foreground: #FFFFFF;
-  --color-secondary: #F4F6FB;
-  --color-secondary-foreground: #2A3A55;
-  --color-muted: #EEF1F8;
-  --color-muted-foreground: #5B6B85;
-  --color-accent: #2E52FF;
+  --color-secondary: #FBE9EF;
+  --color-secondary-foreground: #3A2A2F;
+  --color-muted: #F9E6EC;
+  --color-muted-foreground: #6E5A61;
+  --color-accent: #C00000;
   --color-accent-foreground: #FFFFFF;
-  --color-accent-light: #E4E9FF;
-  --color-accent-mid: #5B78FF;
-  --color-warm: #FF6B3D;
-  --color-warm-foreground: #FFFFFF;
-  --color-warm-light: #FFE7DD;
-  --color-ink: #0A1A33;
-  --color-border: #E3E7F0;
-  --color-ring: #2E52FF;
-  --color-error: #DC2626;
-  --color-warning: #D97706;
-  --color-success: #16A34A;
+  --color-accent-light: #FFE1E1;
+  --color-accent-mid: #FF8B8B;
+  --color-warm: #FF8B8B;
+  --color-warm-foreground: #111111;
+  --color-warm-light: #FFE1E1;
+  --color-deep: #A40000;
+  --color-ink: #111111;
+  --color-border: #F0D9E0;
+  --color-ring: #C00000;
+  --color-error: #B91C1C;
+  --color-warning: #B45309;
+  --color-success: #15803D;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -87,9 +98,24 @@ html {
 }
 
 body {
-  background-color: #FFFFFF;
-  color: #111827;
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* The screens use numeric weight classes (font-600 / font-700). Declared
+   explicitly so headings keep the pitch's bold Montserrat look. */
+.font-500 { font-weight: 500; }
+.font-600 { font-weight: 600; }
+.font-700 { font-weight: 700; }
+.font-800 { font-weight: 800; }
+
+/* Pitch-style wordmark and big figures */
+.bs-figure {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-deep);
 }
 
 /* Hide scrollbars by default, show on hover/scroll */
