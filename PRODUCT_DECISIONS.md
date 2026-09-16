@@ -24,8 +24,8 @@ Last updated: 16 September 2026
 | 12 | The unsourced "100+ million students work while studying" is **replaced** by UNESCO's 264M higher-education enrolment. | 16 Sep 2026 |
 | 13 | **Brand matches the pitch deck**: Montserrat; deep red `#A40000`, red `#C00000`, salmon `#FF8B8B`, blush background `#FEF3F8`, black text; wordmark with B and S in red and "ack"/"oon" in salmon. | 16 Sep 2026 |
 | 14 | **Logo = wordmark with a swoosh arrow** running under the word from the B to the second O (concept B). Replaces the earlier return-arc icon. Resemblance to Amazon's arrow was raised; this option was chosen knowing that. | 17 Sep 2026 |
-| 15 | **Model: the student who needs cover posts the shift, gets matched, chooses a replacement, and their manager approves** before it is covered. Students looking for work set availability, experience, work type and wage, then find shifts. Businesses benefit from fewer staffing gaps and a flexible student workforce. | 17 Sep 2026 |
-| 16 | An **auto-playing flowchart** of that model, showing step names only, is used as the How it works section and as a full-screen presenting page at `/present`. | 17 Sep 2026 |
+| 15 | **Model: the student who needs cover posts the shift, gets matched, chooses a replacement, and their manager approves** before it is covered. Students looking for work set availability, experience, work type and wage, then find shifts. | 17 Sep 2026 |
+| 16 | An **auto-playing flowchart** of that model, showing step names only (two lanes: need a shift covered, looking for work — no business-benefits row), is used as the How it works section and as a full-screen presenting page at `/present`. | 17 Sep 2026 |
 
 ### Evidence on the site
 

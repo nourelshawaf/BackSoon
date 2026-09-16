@@ -6,7 +6,6 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
  *   0  BackSoon
  *   1  Need a shift covered: post → matched → choose → manager approves → covered
  *   2  Looking for work: set profile → find shifts → (into matching)
- *   3  For businesses
  * A longer pause at the end of each section leaves room to talk.
  */
 
@@ -14,7 +13,6 @@ const SECTIONS: string[][] = [
   ['brand'],
   ['l1', 'post', 'a1', 'match', 'a2', 'choose', 'a3', 'approve', 'a4', 'covered'],
   ['l2', 'profile', 'c1', 'c2', 'c3', 'c4', 'a5', 'find', 'a6', 'hot:match'],
-  ['l3', 'b1', 'b2', 'b3'],
 ];
 
 const SECTION_PAUSE = 2600;
@@ -23,7 +21,6 @@ function beat(id: string): number {
   if (id.startsWith('a')) return 300;
   if (id.startsWith('l')) return 500;
   if (id.startsWith('c') && id.length === 2) return 260;
-  if (id.startsWith('b') && id.length === 2) return 1100;
   return 900;
 }
 
@@ -182,15 +179,6 @@ export default function ProcessFlow({ start = 'inView', controls = 'minimal', ke
     </g>
   );
 
-  const Pill = ({ id, x, label }: { id: string; x: number; label: string }) => (
-    <g className={item(id)}>
-      <rect x={x} y={384} width={200} height={44} rx={22} fill="var(--color-card)" stroke="var(--color-accent)" />
-      <text x={x + 100} y={410.5} textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--color-foreground)">
-        {label}
-      </text>
-    </g>
-  );
-
   const Label = ({ id, y, text }: { id: string; y: number; text: string }) => (
     <text className={item(id)} x={20} y={y} fontSize="12" fontWeight="700" fill="var(--color-deep)">
       {text}
@@ -201,10 +189,10 @@ export default function ProcessFlow({ start = 'inView', controls = 'minimal', ke
     <div ref={rootRef}>
       <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
         <svg
-          viewBox="0 0 680 440"
+          viewBox="0 0 680 352"
           className="w-full min-w-[620px] font-display"
           role="img"
-          aria-label="How BackSoon works: a student who needs a shift covered posts it, gets matched with suitable students, chooses one, their manager approves, and the shift is covered. Students looking for work set their availability, experience, work type and wage, then find shifts. For businesses: fewer staffing gaps, lower hiring costs, and a flexible student workforce."
+          aria-label="How BackSoon works: a student who needs a shift covered posts it, gets matched with suitable students, chooses one, their manager approves, and the shift is covered. Students looking for work set their availability, experience, work type and wage, then find shifts."
         >
           <defs>
             <marker id={markerId} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -245,12 +233,6 @@ export default function ProcessFlow({ start = 'inView', controls = 'minimal', ke
           {Arrow({ id: 'a5', d: 'M134 252H148' })}
           {Node({ id: 'find', x: 152, y: 230, lines: ['Find shifts'] })}
           {Arrow({ id: 'a6', d: 'M208 228V160' })}
-
-          {/* 3 — for businesses */}
-          {Label({ id: 'l3', y: 372, text: 'For businesses' })}
-          {Pill({ id: 'b1', x: 20, label: 'Fewer staffing gaps' })}
-          {Pill({ id: 'b2', x: 240, label: 'Lower hiring costs' })}
-          {Pill({ id: 'b3', x: 460, label: 'Flexible workforce' })}
         </svg>
       </div>
 
