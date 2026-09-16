@@ -12,8 +12,8 @@ Last updated: 16 September 2026
 |---|---|---|
 | 1 | The MVP is temporary **student shift coverage only**. Rooms, pets and childcare are future expansion, not part of the product. | 15 Sep 2026 |
 | 2 | Two user types only: **students / temporary workers** and **businesses / employers**. | 15 Sep 2026 |
-| 3 | The **employer has final control** over who is accepted for a shift. | 15 Sep 2026 |
-| 4 | Core flow: post → apply → review candidates → select → confirmed → completed → rating. | 15 Sep 2026 |
+| 3 | The **employer has final control** over who is accepted for a shift — now exercised as the manager's approval step (see #15). | 15 Sep 2026 |
+| 4 | ~~Core flow: post → apply → review candidates → select → confirmed → completed → rating.~~ Superseded by #15. | 15 Sep 2026 |
 | 5 | **Demo data only**, clearly labelled. No real companies, users, reviews, partnerships or validation numbers. | 15 Sep 2026 |
 | 6 | The pitch deck is the source of truth; keep the concept and its terminology. | 15 Sep 2026 |
 | 7 | Both sides of the marketplace share **one app state**, so applying, selecting, completing and rating are visible from the other role. | 16 Sep 2026 |
@@ -24,6 +24,8 @@ Last updated: 16 September 2026
 | 12 | The unsourced "100+ million students work while studying" is **replaced** by UNESCO's 264M higher-education enrolment. | 16 Sep 2026 |
 | 13 | **Brand matches the pitch deck**: Montserrat; deep red `#A40000`, red `#C00000`, salmon `#FF8B8B`, blush background `#FEF3F8`, black text; wordmark with B and S in red and "ack"/"oon" in salmon. | 16 Sep 2026 |
 | 14 | **Logo = wordmark with a swoosh arrow** running under the word from the B to the second O (concept B). Replaces the earlier return-arc icon. Resemblance to Amazon's arrow was raised; this option was chosen knowing that. | 17 Sep 2026 |
+| 15 | **Model: the student who needs cover posts the shift, gets matched, chooses a replacement, and their manager approves** before it is covered. Students looking for work set availability, experience, work type and wage, then find shifts. Businesses benefit from fewer staffing gaps and a flexible student workforce. | 17 Sep 2026 |
+| 16 | An **auto-playing flowchart** of that model, showing step names only, is used as the How it works section and as a full-screen presenting page at `/present`. | 17 Sep 2026 |
 
 ### Evidence on the site
 
@@ -51,7 +53,7 @@ Rules for any number added later: it must have a named source, keep that source'
 
 ## Open questions
 
-1. **Who posts the shift?** Business only / the departing worker requests cover and the manager approves / business posts with an optional "covering for —" field.
+1. **Demo vs. model** — the landing page and flowchart now follow #15, but the clickable demo still has the *business* posting and choosing. Scope the demo change before implementing: who logs in as what, what the manager sees, and what the approval screen looks like.
 2. **Market and currency** — keep Budapest + HUF, or switch to Debrecen or elsewhere?
 3. **Compact mark** — where the full wordmark doesn't fit (small icons, favicon) the site uses a red **B with the same swoosh** under it. Keep, or use something else?
 4. **Match score** — keep the transparent score (current implementation), replace with plain reason chips, or remove?

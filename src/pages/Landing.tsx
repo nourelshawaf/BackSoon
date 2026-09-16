@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { View } from '../types';
 import Logo, { LogoMark, Wordmark } from '../components/Logo';
+import ProcessFlow from '../components/ProcessFlow';
 import { nadeenHero, storyBeats } from '../imports/nadeen';
 
 interface LandingProps {
@@ -437,29 +438,17 @@ function SectionTransition() {
 
 /* ───────────────────────── SECTION 4 — HOW IT WORKS ───────────────────────── */
 function SectionHowItWorks() {
-  const steps = [
-    { n: '01', title: 'Post', body: 'Nadeen’s hotel posts the open shifts — role, date, time, pay. Under two minutes.' },
-    { n: '02', title: 'Match', body: 'BackSoon surfaces students whose availability, location and skills fit the shift.' },
-    { n: '03', title: 'Choose', body: 'The employer reviews verified candidates, ratings and completed shifts — then picks.' },
-    { n: '04', title: 'Covered', body: 'The shift flips from open to covered. The calendar updates. The trip goes ahead.' },
-  ];
   return (
-    <section className="py-24 px-4 sm:px-6 bg-secondary">
-      <div className="max-w-6xl mx-auto">
+    <section id="how-it-works" className="py-24 px-4 sm:px-6 bg-secondary">
+      <div className="max-w-5xl mx-auto">
         <Reveal>
           <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">How BackSoon works</p>
-          <h2 className="font-display font-700 text-3xl sm:text-4xl max-w-lg leading-tight">
-            Four steps from problem to peace of mind.
+          <h2 className="font-display font-700 text-3xl sm:text-4xl max-w-2xl leading-tight">
+            Students who need cover. Students who want work.
           </h2>
         </Reveal>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px mt-12 bg-border rounded-2xl overflow-hidden border border-border">
-          {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 100} className="bg-card p-7 flex flex-col">
-              <span className="font-display font-700 text-2xl text-accent/30 mb-6">{s.n}</span>
-              <h3 className="font-display font-700 text-xl mb-2">{s.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
-            </Reveal>
-          ))}
+        <div className="mt-12 bg-card border border-border rounded-2xl p-5 sm:p-8">
+          <ProcessFlow start="inView" controls="minimal" />
         </div>
       </div>
     </section>
