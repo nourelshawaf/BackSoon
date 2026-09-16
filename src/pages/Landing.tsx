@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { View } from '../types';
 import Logo, { LogoMark, Wordmark } from '../components/Logo';
 import ProcessFlow from '../components/ProcessFlow';
@@ -458,12 +458,6 @@ function SectionHowItWorks() {
 /* ───────────────────────── SECTION 5 — THE PRODUCT ───────────────────────── */
 function SectionProduct() {
   const [applied, setApplied] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
-
-  const candidates = [
-    { id: 'c1', name: 'Nóra K.', uni: 'ELTE', match: 92, rating: 4.8, done: 12 },
-    { id: 'c2', name: 'Bálint T.', uni: 'BME', match: 87, rating: 4.7, done: 8 },
-  ];
 
   return (
     <section className="py-24 px-4 sm:px-6 bg-background">
@@ -474,7 +468,7 @@ function SectionProduct() {
             Two views. One covered shift.
           </h2>
           <p className="text-muted-foreground mt-4">
-            Try it — apply as a student, then select a candidate as the business.
+            Apply as a student — then watch the business pick the best match.
           </p>
         </Reveal>
 
@@ -490,7 +484,7 @@ function SectionProduct() {
                 <div>
                   <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent-light text-accent">Hospitality</span>
                   <h3 className="font-display font-700 text-lg mt-2">Waitress</h3>
-                  <p className="text-sm text-muted-foreground">Radisson Collection Hotel · Budapest V</p>
+                  <p className="text-sm text-muted-foreground">Szirom Hotel · Budapest V</p>
                 </div>
                 <div className="text-right">
                   <span className="font-display font-700 text-2xl text-accent">92%</span>
@@ -520,69 +514,209 @@ function SectionProduct() {
 
           {/* Business view */}
           <Reveal delay={120} className="bg-card border border-border rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-5">
-              <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Business view</span>
-              <span className="h-px flex-1 bg-border" />
-            </div>
-            <div className="rounded-xl border border-border p-5">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="font-display font-700 text-lg">Waitress</h3>
-                  <p className="text-sm text-muted-foreground">25 Sep · 16:00–22:00</p>
-                </div>
-                <span
-                  className={`text-[11px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full transition-colors ${
-                    selected ? 'bg-success/10 text-success' : 'bg-warm-light text-warm'
-                  }`}
-                >
-                  {selected ? 'Covered ✓' : 'Open'}
-                </span>
-              </div>
-              <div className="space-y-2.5">
-                {candidates.map((c) => {
-                  const isSel = selected === c.id;
-                  const isOther = selected && !isSel;
-                  return (
-                    <div
-                      key={c.id}
-                      className={`rounded-lg border p-3 transition-all ${
-                        isSel ? 'border-success bg-success/5' : 'border-border'
-                      } ${isOther ? 'opacity-40' : ''}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-accent-light text-accent flex items-center justify-center text-xs font-semibold">
-                          {c.name.split(' ').map((p) => p[0]).join('')}
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium flex items-center gap-1.5">
-                            {c.name}
-                            <span className="text-success"><CheckIcon /></span>
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {c.uni} · ★ {c.rating} · {c.done} shifts
-                          </p>
-                        </div>
-                        <span className="ml-auto font-display font-700 text-sm text-accent">{c.match}%</span>
-                      </div>
-                      <button
-                        onClick={() => setSelected(isSel ? null : c.id)}
-                        className={`w-full mt-3 py-2 text-xs font-medium rounded-md transition-all ${
-                          isSel
-                            ? 'bg-success text-white'
-                            : 'bg-secondary text-foreground hover:bg-muted'
-                        }`}
-                      >
-                        {isSel ? 'Selected — shift covered' : 'Select candidate'}
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <BusinessDemoCard />
           </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+/*
+ * Business view that plays itself once scrolled into view:
+ *   applicants arrive → match scores count up → list re-ranks best-first →
+ *   the best match is selected → the shift flips to covered.
+ * A mini flow rail above the card tracks which step is playing.
+ */
+function BusinessDemoCard() {
+  // arrival order — the lower match arrives first so the re-rank is visible
+  const candidates = [
+    { id: 'bt', name: 'Bálint T.', uni: 'BME', match: 87, rating: 4.7, done: 8 },
+    { id: 'nk', name: 'Nóra K.', uni: 'ELTE', match: 92, rating: 4.8, done: 12 },
+  ];
+  const best = candidates.reduce((a, b) => (b.match > a.match ? b : a));
+  const steps = ['Applicants', 'Match', 'Select', 'Covered'];
+
+  const [ref, inView] = useInView<HTMLDivElement>(0.45);
+  // 0 idle · 1 applicants · 2 matching · 3 ranked · 4 selected · 5 covered
+  const [phase, setPhase] = useState(0);
+  const [arrived, setArrived] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [manual, setManual] = useState<string | null>(null);
+  const [run, setRun] = useState(0);
+  const rowRef = useRef<HTMLDivElement | null>(null);
+  const [rowStep, setRowStep] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      setArrived(candidates.length);
+      setProgress(1);
+      setPhase(5);
+      return;
+    }
+    setPhase(1);
+    setArrived(0);
+    setProgress(0);
+    setManual(null);
+
+    const timers: number[] = [];
+    let raf = 0;
+    const at = (ms: number, fn: () => void) => timers.push(window.setTimeout(fn, ms));
+
+    at(350, () => setArrived(1));
+    at(950, () => setArrived(2));
+    at(1750, () => {
+      setPhase(2);
+      const start = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / 900);
+        setProgress(1 - Math.pow(1 - t, 3));
+        if (t < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    });
+    at(3000, () => setPhase(3));
+    at(4200, () => setPhase(4));
+    at(5300, () => setPhase(5));
+
+    return () => {
+      timers.forEach(clearTimeout);
+      cancelAnimationFrame(raf);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, run]);
+
+  // distance one row moves when the list re-ranks (row height + gap)
+  useLayoutEffect(() => {
+    if (rowRef.current) setRowStep(rowRef.current.offsetHeight + 10);
+  }, [arrived]);
+
+  const ranked = phase >= 3;
+  const selectedId = manual ?? (phase >= 4 ? best.id : null);
+  const covered = phase >= 5 || manual !== null;
+  const activeStep = phase <= 1 ? 0 : phase <= 3 ? 1 : phase === 4 ? 2 : 3;
+  const bestIndex = candidates.findIndex(c => c.id === best.id);
+
+  return (
+    <div ref={ref}>
+      <div className="flex items-center gap-2 mb-5">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Business view</span>
+        <span className="h-px flex-1 bg-border" />
+      </div>
+
+      {/* mini flow rail */}
+      <div className="flex items-center mb-4" aria-hidden="true">
+        {steps.map((s, i) => {
+          const reached = phase > 0 && i <= activeStep;
+          return (
+            <div key={s} className="flex items-center flex-1 last:flex-none">
+              <span
+                className={`text-[11px] font-semibold px-2 py-1 rounded-full whitespace-nowrap transition-colors duration-300 ${
+                  reached ? 'bg-accent text-accent-foreground' : 'bg-muted text-muted-foreground'
+                }`}
+              >
+                {s}
+              </span>
+              {i < steps.length - 1 && (
+                <span className="relative h-0.5 flex-1 mx-1.5 bg-muted rounded-full overflow-hidden">
+                  <span
+                    className="absolute inset-y-0 left-0 bg-accent transition-[width] duration-500 ease-out"
+                    style={{ width: phase > 0 && i < activeStep ? '100%' : '0%' }}
+                  />
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="rounded-xl border border-border p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="font-display font-700 text-lg">Waitress</h3>
+            <p className="text-sm text-muted-foreground">25 Sep · 16:00–22:00</p>
+          </div>
+          <span
+            key={covered ? 'covered' : 'open'}
+            className={`text-[11px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full ${
+              covered ? 'bg-accent text-accent-foreground bs-pop-in' : 'bg-warm-light text-warm'
+            }`}
+          >
+            {covered ? 'Covered ✓' : 'Open'}
+          </span>
+        </div>
+
+        <div className="relative space-y-2.5">
+          {candidates.map((c, i) => {
+            const visible = i < arrived;
+            // swap places once ranked: best moves to the top
+            const offset = ranked && bestIndex !== 0 ? (c.id === best.id ? -bestIndex : 1) * rowStep : 0;
+            const isSel = selectedId === c.id;
+            const isOther = selectedId !== null && !isSel;
+            const shownMatch = phase >= 2 ? Math.round(c.match * progress) : null;
+
+            return (
+              <div
+                key={c.id}
+                ref={i === 0 ? rowRef : undefined}
+                className={`rounded-lg border p-3 bg-card transition-all duration-500 ease-out ${
+                  isSel ? 'border-accent ring-1 ring-accent/30' : 'border-border'
+                } ${isOther ? 'opacity-40' : ''}`}
+                style={{
+                  opacity: visible ? undefined : 0,
+                  transform: `translateY(${visible ? offset : offset + 12}px)`,
+                  zIndex: c.id === best.id ? 1 : 0,
+                  position: 'relative',
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-accent-light text-accent flex items-center justify-center text-xs font-semibold">
+                    {c.name.split(' ').map(p => p[0]).join('')}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium flex items-center gap-1.5">
+                      {c.name}
+                      <span className="text-success"><CheckIcon /></span>
+                      {ranked && c.id === best.id && (
+                        <span className="bs-pop-in text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-accent-light text-accent">
+                          Best match
+                        </span>
+                      )}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {c.uni} · ★ {c.rating} · {c.done} shifts
+                    </p>
+                  </div>
+                  <span className="ml-auto font-display font-700 text-sm text-deep tabular-nums w-10 text-right">
+                    {shownMatch === null ? '—' : `${shownMatch}%`}
+                  </span>
+                </div>
+                <button
+                  key={isSel ? 'sel' : 'idle'}
+                  onClick={() => phase === 5 && setManual(c.id)}
+                  className={`w-full mt-3 py-2 text-xs font-medium rounded-md transition-colors ${
+                    isSel
+                      ? 'bg-accent text-accent-foreground bs-press'
+                      : 'bg-secondary text-foreground hover:bg-muted'
+                  } ${phase === 5 ? '' : 'cursor-default'}`}
+                >
+                  {isSel ? 'Selected ✓' : 'Select candidate'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="h-6 mt-3 flex justify-end">
+        {phase === 5 && (
+          <button onClick={() => setRun(r => r + 1)} className="text-xs font-medium text-accent hover:underline">
+            Replay ↺
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 

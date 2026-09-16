@@ -82,6 +82,14 @@
   70% { transform: scale(1.08); }
   100% { transform: scale(1); opacity: 1; }
 }
+.bs-pop-in { animation: bs-pop .4s cubic-bezier(.22,1,.36,1) both; }
+@keyframes bs-press {
+  0% { transform: scale(1); }
+  35% { transform: scale(.95); }
+  100% { transform: scale(1); }
+}
+.bs-press { animation: bs-press .35s ease-out; }
+
 @keyframes bs-drift {
   0% { transform: translate(0, 0) rotate(var(--r, 0deg)); }
   100% { transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--r, 0deg)); }
@@ -111,6 +119,7 @@
   .bs-scene-text { animation: none; }
   .bs-fade-late { animation: none; opacity: 1; }
   .bs-flow-item, .bs-flow-arrow { transition: none; }
+  .bs-pop-in, .bs-press { animation: none; }
 }
 
 * {
