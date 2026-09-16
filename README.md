@@ -6,7 +6,9 @@ BackSoon connects local businesses with verified students who can temporarily co
 
 This repository is the MVP prototype built for a startup competition demo.
 
-> **Everything in the app is demo data.** Businesses, students, ratings and reviews are fictional and exist only to demonstrate the flow. No real company, person, partnership or statistic is represented.
+> **The product screens run on demo data.** Businesses, students, ratings and reviews inside the app are fictional and exist only to demonstrate the flow.
+>
+> **The evidence section on the landing page is real** — every figure carries its source (see `PRODUCT_DECISIONS.md`).
 
 ---
 

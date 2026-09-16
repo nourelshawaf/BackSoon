@@ -70,6 +70,7 @@ export default function Landing({ onNavigate }: LandingProps) {
       <SectionScenario onNavigate={onNavigate} />
       <SectionStory />
       <SectionProblem />
+      <SectionEvidence />
       <SectionTransition />
       <SectionHowItWorks />
       <SectionProduct />
@@ -293,6 +294,82 @@ function SectionProblem() {
             Finding someone you <span className="text-accent-mid">trust</span> is the problem.
           </p>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ───────────────────────── SECTION 2b — THE EVIDENCE ─────────────────────────
+ * Real figures only. Every number carries its source and, for our own
+ * interviews, the sample size — nothing here is demo data.
+ * ───────────────────────────────────────────────────────────────────────────── */
+function SectionEvidence() {
+  const facts = [
+    {
+      figure: '19 of 22',
+      badge: '86%',
+      body: 'students we interviewed said they would use BackSoon to get their shifts covered — after each semester and during their mandatory internship.',
+      source: 'BackSoon in-person interviews with university students',
+      href: undefined,
+    },
+    {
+      figure: '68%',
+      badge: undefined,
+      body: 'of US hiring managers use staffing agencies — including to fill in for absent permanent staff.',
+      source: 'Indeed Flex survey, August 2024',
+      href: 'https://www.prnewswire.com/news-releases/us-businesses-lack-quality-temporary-workers-302229682.html',
+    },
+    {
+      figure: '264M',
+      badge: undefined,
+      body: 'students are enrolled in higher education worldwide.',
+      source: 'UNESCO, 2025',
+      href: 'https://www.unesco.org/en/articles/record-number-higher-education-students-highlights-global-need-recognition-qualifications',
+    },
+  ];
+
+  return (
+    <section className="py-24 px-4 sm:px-6 bg-background">
+      <div className="max-w-6xl mx-auto">
+        <Reveal className="max-w-xl">
+          <p className="text-xs uppercase tracking-widest text-accent font-semibold mb-4">It’s not just Nadeen</p>
+          <h2 className="font-display font-700 text-3xl sm:text-4xl leading-tight">
+            Students leave. Shifts stay. Businesses already pay to fill the gap.
+          </h2>
+        </Reveal>
+
+        <div className="grid md:grid-cols-3 gap-4 mt-12">
+          {facts.map((f, i) => (
+            <Reveal key={f.figure} delay={i * 120}>
+              <div className="h-full flex flex-col border border-border rounded-xl p-6">
+                <div className="flex items-baseline gap-3">
+                  <p className="font-display font-700 text-4xl sm:text-5xl tracking-tight text-ink">{f.figure}</p>
+                  {f.badge && (
+                    <span className="text-sm font-semibold text-accent bg-accent-light px-2 py-0.5 rounded-full">
+                      {f.badge}
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mt-3 flex-1">{f.body}</p>
+                <p className="text-xs text-muted-foreground/80 mt-5 pt-4 border-t border-border">
+                  Source:{' '}
+                  {f.href ? (
+                    <a
+                      href={f.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 hover:text-foreground"
+                    >
+                      {f.source}
+                    </a>
+                  ) : (
+                    f.source
+                  )}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
