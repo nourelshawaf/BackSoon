@@ -23,6 +23,7 @@ Last updated: 16 September 2026
 | 11 | Own research is shown **with its sample size**: 19 of 22 students (86%). The university is not named. | 16 Sep 2026 |
 | 12 | The unsourced "100+ million students work while studying" is **replaced** by UNESCO's 264M higher-education enrolment. | 16 Sep 2026 |
 | 13 | **Brand matches the pitch deck**: Montserrat; deep red `#A40000`, red `#C00000`, salmon `#FF8B8B`, blush background `#FEF3F8`, black text; wordmark with B and S in red and "ack"/"oon" in salmon. | 16 Sep 2026 |
+| 14 | **Logo = wordmark with a swoosh arrow** running under the word from the B to the second O (concept B). Replaces the earlier return-arc icon. Resemblance to Amazon's arrow was raised; this option was chosen knowing that. | 17 Sep 2026 |
 
 ### Evidence on the site
 
@@ -52,7 +53,7 @@ Rules for any number added later: it must have a named source, keep that source'
 
 1. **Who posts the shift?** Business only / the departing worker requests cover and the manager approves / business posts with an optional "covering for —" field.
 2. **Market and currency** — keep Budapest + HUF, or switch to Debrecen or elsewhere?
-3. **Logo mark** — colours and wordmark now match the pitch, but the small icon is still the site's return-arc symbol (recoloured red). Keep it, or bring back the deck's house-and-two-figures logo?
+3. **Compact mark** — where the full wordmark doesn't fit (small icons, favicon) the site uses a red **B with the same swoosh** under it. Keep, or use something else?
 4. **Match score** — keep the transparent score (current implementation), replace with plain reason chips, or remove?
 5. **Trust badges** — which to show: student verified, ID verified, business verified, star rating, completed shifts?
 6. **Money** — hourly rate only, or also show a BackSoon service fee so judges can see the revenue model?
@@ -64,7 +65,8 @@ Rules for any number added later: it must have a named source, keep that source'
 ## Assumptions (inherited from the existing build — NOT approved)
 
 - Setting is **Budapest, Hungary**, pay in **HUF per hour**, students from Hungarian universities.
-- The return-arc icon is kept next to the wordmark, recoloured to the pitch palette.
+- Compact mark / favicon is a red B with the swoosh — derived from the chosen logo, not separately approved.
+- The swoosh draws itself in once, when "Meet BackSoon" scrolls into view. There is no loading screen, because nothing in the prototype actually loads.
 - Verification checkmarks stay **green**, a widely recognised trust signal, rather than brand red.
 - The **match score** is shown to both sides. It is computed transparently from: skills the shift asks for (up to 55 pts), same district (15), availability fits the shift (15), verified student (10), rating (5). Every screen that shows a score can explain it — there is no hidden model and no AI.
 - Shift categories are Hospitality, Retail, Food & Beverage, Events, Other.

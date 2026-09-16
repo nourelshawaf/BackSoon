@@ -378,13 +378,15 @@ function SectionEvidence() {
 /* ───────────────────────── SECTION 3 — THE TRANSITION ───────────────────────── */
 function SectionTransition() {
   const [ref, inView] = useInView<SVGSVGElement>(0.5);
+  const [headRef, headInView] = useInView<HTMLHeadingElement>(0.6);
   const stops = ['Away', 'Covered', 'Back'];
   return (
     <section className="py-28 px-4 sm:px-6 text-center bg-background">
       <Reveal className="flex flex-col items-center">
-        <LogoMark size={64} animate />
-        <h2 className="font-display font-700 text-4xl sm:text-5xl tracking-tight mt-6">
-          Meet <Wordmark />.
+        <h2 ref={headRef} className="font-display font-700 text-5xl sm:text-7xl tracking-tight">
+          <span className="block text-2xl sm:text-3xl text-muted-foreground mb-3">Meet</span>
+          {/* remount when scrolled into view so the swoosh draws in front of the visitor */}
+          <Wordmark key={headInView ? 'seen' : 'unseen'} animate />
         </h2>
         <p className="text-lg text-muted-foreground mt-4 max-w-md">
           Temporary coverage for when life takes you somewhere else.
